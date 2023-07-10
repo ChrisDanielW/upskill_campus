@@ -14,7 +14,6 @@ def display_table():
         ("Sol", "Badguy"),
         ("Evie", "Frye"),
         ("Jesse", "Faden")
-        # Add more data as needed
     ]
 
     # Clear previous table display
@@ -37,7 +36,7 @@ def copy_text():
 
 root = ctk.CTk()
 root.title("Table Display")
-root.geometry("400x300")
+root.geometry("640x500")
 
 # Create a frame to hold the Treeview widget
 frame = ctk.CTkFrame(root)
@@ -50,24 +49,24 @@ scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 style = ttk.Style()
 style.theme_use('clam')  # Use 'clam' theme as a dark theme option
 
-
 # Create the Treeview widget with static dimensions
 table = ttk.Treeview(frame, columns=("First Name", "Last Name"), show="headings", height=5, style="Custom.Treeview")
-table.column("First Name", width=100)
-table.column("Last Name", width=100)
+table.column("First Name", width=300)
+table.column("Last Name", width=150)
 table.heading("First Name", text="First Name")
 table.heading("Last Name", text="Last Name")
 table.pack(side=tk.LEFT, fill=tk.Y)
-# table.bind("<Control-c>", copy_text)
 
 # Create the dropdown menu
 menu = tk.Menu(root, tearoff=0)
 menu.add_command(label="Copy", command=copy_text)
 
+
 # Bind the right-click event to show the dropdown menu
 def show_menu(event):
     if table.identify_region(event.x, event.y) == "cell":
         menu.post(event.x_root, event.y_root)
+
 
 table.bind("<Button-3>", show_menu)
 

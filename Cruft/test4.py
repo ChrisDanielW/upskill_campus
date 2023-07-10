@@ -4,12 +4,10 @@ from tkinter import ttk
 import sqlite3
 from pyshorteners import Shortener as Sh
 
-conn = sqlite3.connect("url_shortener.db")
+conn = sqlite3.connect("../url_shortener.db")
 cursor = conn.cursor()
-
 cursor.execute('''CREATE TABLE IF NOT EXISTS urls
-                  (id INTEGER PRIMARY KEY AUTOINCREMENT, original_url TEXT, shortened_url TEXT)''')
-
+                  (id INTEGER PRIMARY KEY AUTOINCREMENT, short_url TEXT, og_url TEXT)''')
 conn.commit()
 
 
@@ -56,17 +54,7 @@ def display_urls():
     tree_frame = tk.Frame(canvas)
     canvas.create_window((0, 0), window=tree_frame, anchor='nw')
 
-    # Create the Treeview widget with a dark theme
-    style = ttk.Style()
-    style.theme_use('clam')  # Use 'clam' theme as a dark theme option
-    style.configure('Treeview',
-                    background='black',  # Set background color
-                    foreground='white',  # Set text color
-                    fieldbackground='black')  # Set field background color
-    style.configure('Treeview.Heading',
-                    background='gray',  # Set header background color
-                    foreground='white')  # Set header text color
-
+    # Create the Treeview widget
     tree = ttk.Treeview(tree_frame, columns=col_labels, show='headings')
     tree.grid(row=0, column=0, sticky='nsew')
 
