@@ -26,15 +26,13 @@ def display_table():
 
 
 # Function to copy the selected item's text to the clipboard
-def copy_text(event):
+def copy_text():
     selected_item = table.focus()
     if selected_item:
-        column = table.identify_column(event.x)  # Get the column at the mouse cursor position
-        column_index = table["columns"].index(column)  # Get the index of the column
-        text = table.item(selected_item, "values")[column_index]  # Get the value from the column index
-        if text:
-            frame.clipboard_clear()
-            frame.clipboard_append(text)
+        value = table.set(selected_item, "First Name")
+        if value:
+            root.clipboard_clear()
+            root.clipboard_append(value)
 
 
 root = ctk.CTk()
@@ -60,7 +58,18 @@ table.column("Last Name", width=100)
 table.heading("First Name", text="First Name")
 table.heading("Last Name", text="Last Name")
 table.pack(side=tk.LEFT, fill=tk.Y)
-table.bind("<Control-c>", copy_text)
+# table.bind("<Control-c>", copy_text)
+
+# Create the dropdown menu
+menu = tk.Menu(root, tearoff=0)
+menu.add_command(label="Copy", command=copy_text)
+
+# Bind the right-click event to show the dropdown menu
+def show_menu(event):
+    if table.identify_region(event.x, event.y) == "cell":
+        menu.post(event.x_root, event.y_root)
+
+table.bind("<Button-3>", show_menu)
 
 style.configure("Custom.Treeview",
                 background="black",  # Set background color
