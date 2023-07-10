@@ -12,8 +12,8 @@ class App(ctk.CTk):
 
         def is_real(link):
             try:
-                response = requests.head(link)
-                return response.status_code == requests.codes.ok
+                resp = requests.head(link)
+                return resp.status_code == requests.codes.ok
             except requests.exceptions.RequestException:
                 return False
 
