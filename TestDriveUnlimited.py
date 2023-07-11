@@ -8,7 +8,7 @@ from pyshorteners import Shortener as Sh
 ctk.set_appearance_mode("dark")  # Sets appearance to 'dark' in customtkinter
 ctk.set_default_color_theme("green")  # Sets color theme to 'green' in customtkinter
 
-# Creating (initially) and connecting to a .db file
+# Creating (if the file doesn't exist already) and connecting to a .db file
 conn = sql.connect("C:\\SQLITE\\Shurl.db")
 cur = conn.cursor()
 # Creates a table in the above .db file if it doesn't already exist
