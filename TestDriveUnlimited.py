@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import requests
 import tkinter as tk
+from tkinter import messagebox
 from tkinter import ttk
 import sqlite3 as sql
 from pyshorteners import Shortener as Sh
@@ -20,7 +21,7 @@ class App(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("URL Shortener")
-        self.geometry("1040x500")
+        self.geometry("1040x540")
 
         # Refreshes and displays all elements in the database on the table
         def display():
@@ -46,16 +47,15 @@ class App(ctk.CTk):
             display()
 
         # Shortens the URL and calls the insert() and is_real() functions
-        def button_pressed():
+        def cargo():
             link = self.blink.get()
             self.slink.set('')
             if is_real(link):
-                self.disclaimer.set('')
                 self.slink.set(Sh().tinyurl.short(link))
                 link_short = self.slink.get()
                 insert(link_short, link)
             else:
-                self.disclaimer.set('Please type a valid URL')
+                messagebox.showwarning("Invalid Input", "Please enter a valid URL")
 
         # Implementation of copy functionality within the table
         def copy_text():
@@ -65,6 +65,14 @@ class App(ctk.CTk):
                 if value:
                     self.clipboard_clear()
                     self.clipboard_append(value)
+
+        # Truncates the urls table and clears all entries
+        def clearTab():
+            choice = messagebox.askyesno("Confirmation", "Are you sure you want to delete your history?")
+            if choice:
+                cur.execute("DELETE FROM urls")
+                conn.commit()
+                display()
 
         # UI elements
 
@@ -79,19 +87,15 @@ class App(ctk.CTk):
         self.label2.pack(padx=10, pady=10)
 
         self.slink = ctk.StringVar()
-        self.slink_entry = ctk.CTkEntry(self, width=350, height=28, textvariable=self.slink)
+        self.slink_entry = ctk.CTkEntry(self, width=300, height=28, textvariable=self.slink, state="readonly")
         self.slink_entry.pack()
 
-        self.shorts_button = ctk.CTkButton(self, text="Shorten URL", command=button_pressed)
+        self.shorts_button = ctk.CTkButton(self, text="Shorten URL", command=cargo, text_color="black", hover_color="#90f0b6")
         self.shorts_button.pack(padx=20, pady=20)
-
-        self.disclaimer = ctk.StringVar()
-        self.disclaimer_label = ctk.CTkLabel(self, textvariable=self.disclaimer)
-        self.disclaimer_label.pack(padx=5, pady=5)
 
         # Creates a second frame for the Treeview that will act as the table
         frame = ctk.CTkFrame(self)
-        frame.pack()
+        frame.pack(padx=15, pady=15)
 
         # Creates a Scrollbar widget and associate it with the Treeview
         scrollbar = ctk.CTkScrollbar(frame)
@@ -99,10 +103,10 @@ class App(ctk.CTk):
 
         # Sets a style
         style = ttk.Style()
-        style.theme_use('clam')
+        style.theme_use('default')
 
         # Creates a Treeview widget with static dimensions
-        table = ttk.Treeview(frame, columns=("short-url", "og-url"), show="headings", height=5,
+        table = ttk.Treeview(frame, columns=("short-url", "og-url"), show="headings", height=4,
                              style="Custom.Treeview")
         table.column("short-url", width=200)
         table.column("og-url", width=700)
@@ -121,14 +125,34 @@ class App(ctk.CTk):
 
         table.bind("<Button-3>", show_menu)
 
-        style.configure("Custom.Treeview", background="black", foreground="grey")  # Sets background and text color
+        style.configure("Custom.Treeview",
+                        background="#2a2d2e",
+                        foreground="white",
+                        rowheight=25,
+                        fieldbackground="#343638",
+                        bordercolor="#343638",
+                        borderwidth=0)  # Sets background and text color
+
+        style.configure("Treeview.Heading",
+                        background="#5ba378",  # Set background color
+                        foreground="black",
+                        bordercolor="#343638",
+                        borderwidth=0,
+                        font=("TKDefaultFont", 11),
+                        padding=1)  # Set text color
 
         # Attaches a Scrollbar widget to the Treeview
         table.configure(yscrollcommand=scrollbar.set)
         scrollbar.configure(command=table.yview)
+
+        self.clr_bt = ctk.CTkButton(self, text="Clear History", command=clearTab, text_color="black", hover_color="#90f0b6")
+        self.clr_bt.pack(padx=20, pady=20)
 
         display()
 
 
 app = App()
 app.mainloop()
+
+cur.close()
+conn.close()

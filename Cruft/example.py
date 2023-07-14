@@ -11,6 +11,7 @@ cur = conn.cursor()
 # Creates a table in the above .db file if it doesn't already exist
 cur.execute('''CREATE TABLE IF NOT EXISTS urls(id INTEGER PRIMARY KEY AUTOINCREMENT, short_url TEXT, og_url TEXT)''')
 
+
 # Main class containing both the frames
 class App(ctk.CTk):
     def __init__(self):
@@ -80,10 +81,6 @@ class App(ctk.CTk):
         frame = ctk.CTkFrame(self)
         frame.pack()
 
-        # Creates a Scrollbar widget and associate it with the Treeview
-        scrollbar = ctk.CTkScrollbar(frame)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
         # Sets a style
         style = ttk.Style()
         style.theme_use('clam')
@@ -97,13 +94,19 @@ class App(ctk.CTk):
         table.heading("og-url", text="Original URL")
         table.pack(side=tk.LEFT, fill=tk.Y)
 
-        style.configure("Custom.Treeview", background="black", foreground="grey")  # Sets background and text color
-
-        # Attaches a Scrollbar widget to the Treeview
-        table.configure(yscrollcommand=scrollbar.set)
-        scrollbar.configure(command=table.yview)
+        style.configure("Custom.Treeview",
+                        background="#2a2d2e",
+                        foreground="white",
+                        rowheight=25,
+                        fieldbackground="#343638",
+                        bordercolor="#343638",
+                        borderwidth=0)  # Sets background and text color
 
         display()
+        
 
 app = App()
 app.mainloop()
+
+cur.close()
+conn.close()
