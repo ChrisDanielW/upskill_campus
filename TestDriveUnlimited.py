@@ -2,7 +2,7 @@ import customtkinter as ctk
 import requests
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import ttk
+from tkinter import ttk  # (Themed Tkinter)
 import sqlite3 as sql
 from pyshorteners import Shortener as Sh
 
@@ -66,7 +66,7 @@ class App(ctk.CTk):
                     self.clipboard_clear()
                     self.clipboard_append(value)
 
-        # Truncates the urls table and clears all entries
+        # Truncates the urls table in the database and clears all entries
         def clearTab():
             choice = messagebox.askyesno("Confirmation", "Are you sure you want to delete your history?")
             if choice:
@@ -90,6 +90,7 @@ class App(ctk.CTk):
         self.slink_entry = ctk.CTkEntry(self, width=300, height=28, textvariable=self.slink, state="readonly")
         self.slink_entry.pack()
 
+        # Button with an event attached to shorten URLs
         self.shorts_button = ctk.CTkButton(self, text="Shorten URL", command=cargo, text_color="black", hover_color="#90f0b6")
         self.shorts_button.pack(padx=20, pady=20)
 
@@ -101,7 +102,7 @@ class App(ctk.CTk):
         scrollbar = ctk.CTkScrollbar(frame)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-        # Sets a style
+        # Creates a Style in Themed Tkinter
         style = ttk.Style()
         style.theme_use('default')
 
@@ -125,26 +126,29 @@ class App(ctk.CTk):
 
         table.bind("<Button-3>", show_menu)
 
+        # Configures a style for the treeview elements to follow
         style.configure("Custom.Treeview",
                         background="#2a2d2e",
                         foreground="white",
                         rowheight=25,
                         fieldbackground="#343638",
                         bordercolor="#343638",
-                        borderwidth=0)  # Sets background and text color
+                        borderwidth=0)
 
+        # Configures a style for the treeview headers to follow
         style.configure("Treeview.Heading",
-                        background="#5ba378",  # Set background color
+                        background="#5ba378",
                         foreground="black",
                         bordercolor="#343638",
                         borderwidth=0,
                         font=("TKDefaultFont", 11),
-                        padding=1)  # Set text color
+                        padding=1)
 
         # Attaches a Scrollbar widget to the Treeview
         table.configure(yscrollcommand=scrollbar.set)
         scrollbar.configure(command=table.yview)
 
+        # Button with an event attached to clear the user's history
         self.clr_bt = ctk.CTkButton(self, text="Clear History", command=clearTab, text_color="black", hover_color="#90f0b6")
         self.clr_bt.pack(padx=20, pady=20)
 
