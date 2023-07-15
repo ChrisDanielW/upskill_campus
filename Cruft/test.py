@@ -1,8 +1,10 @@
 import customtkinter
+import tkinter as tk
+from tkinter import ttk
 
 
 def button_clicked():
-    print("Boom the butt was clicked")
+    print(ttk.Style().theme_use())
 
 
 app = customtkinter.CTk()
