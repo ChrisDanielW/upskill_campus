@@ -10,7 +10,7 @@ ctk.set_appearance_mode("dark")  # Sets appearance to 'dark' in customtkinter
 ctk.set_default_color_theme("green")  # Sets color theme to 'green' in customtkinter
 
 # Creating (if the file doesn't exist already) and connecting to a .db file
-conn = sql.connect("Cruft/Shurl.db")
+conn = sql.connect("Shurl.db")
 cur = conn.cursor()
 # Creates a table in the above .db file if it doesn't already exist
 cur.execute('''CREATE TABLE IF NOT EXISTS urls(id INTEGER PRIMARY KEY AUTOINCREMENT, short_url TEXT, og_url TEXT)''')
@@ -87,10 +87,10 @@ class App(ctk.CTk):
                 border += '_'
             return border
 
-        # UI elements
-
+        # Adds weight to a column in custoktkinter's grid system to give it more preference
         self.grid_columnconfigure(0, weight=1)
 
+        # The logo consisting of the title
         self.logo = ctk.CTkLabel(self,
                                  text="CARGO",
                                  font=("Segoe UI Light", 40))
@@ -98,6 +98,7 @@ class App(ctk.CTk):
         self.logo.grid(sticky="e",
                        padx=15)
 
+        # Label that acts as a simple border
         self.label0 = ctk.CTkLabel(self,
                                    text=bigline(),
                                    font=("Segoe UI", 10),
@@ -108,6 +109,7 @@ class App(ctk.CTk):
                          sticky="ew",
                          padx=15, pady=(0, 15))
 
+        # Label prompting the user to enter a link
         self.label1 = ctk.CTkLabel(self,
                                    text="Enter a link to shorten:",
                                    font=("Segoe UI", 18),
@@ -118,6 +120,7 @@ class App(ctk.CTk):
                          sticky="w",
                          padx=18, pady=(5, 0))
 
+        # Entry handling the inputting of the link
         self.blink = ctk.StringVar()
         self.blink_entry = ctk.CTkEntry(self,
                                         width=650,
@@ -130,6 +133,7 @@ class App(ctk.CTk):
                               sticky="ew",
                               padx=15, pady=10)
 
+        # Checkbox allowing the user to not save shortened URLs in the database
         self.check1 = ctk.CTkCheckBox(self,
                                       text="Don't save in history",
                                       font=("Calibri", 19),
@@ -140,6 +144,7 @@ class App(ctk.CTk):
         self.check1.grid(padx=18, pady=(5, 0),
                          sticky="w")
 
+        # Label announcing the shortened URL
         self.label2 = ctk.CTkLabel(self,
                                    text="Shortened URL:",
                                    font=("Segoe UI", 18),
@@ -148,6 +153,7 @@ class App(ctk.CTk):
         self.label2.grid(sticky="ns",
                          padx=18, pady=(0, 0))
 
+        # Entry that displays the output in the form of the shortened URL
         self.slink = ctk.StringVar()
         self.slink_entry = ctk.CTkEntry(self,
                                         width=300,
@@ -256,6 +262,7 @@ class App(ctk.CTk):
         self.label01.grid(sticky="ew",
                           padx=15, pady=0)
 
+        # Crediting statement
         self.madeby = ctk.CTkLabel(self,
                                    text="A simple URL shortener created by Chris Daniel Wilson",
                                    font=("Arial", 15, "italic"))
