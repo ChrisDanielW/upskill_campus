@@ -10,7 +10,7 @@ ctk.set_appearance_mode("dark")  # Sets appearance to 'dark' in customtkinter
 ctk.set_default_color_theme("green")  # Sets color theme to 'green' in customtkinter
 
 # Creating (if the file doesn't exist already) and connecting to a .db file
-conn = sql.connect("Shurl.db")
+conn = sql.connect("Cruft/Shurl.db")
 cur = conn.cursor()
 # Creates a table in the above .db file if it doesn't already exist
 cur.execute('''CREATE TABLE IF NOT EXISTS urls(id INTEGER PRIMARY KEY AUTOINCREMENT, short_url TEXT, og_url TEXT)''')
@@ -38,7 +38,6 @@ class App(ctk.CTk):
                 resp = requests.head(link)
                 stat = resp.status_code
                 check = requests.codes
-                print(stat)
                 if stat == check.ok or stat == check.found or stat == check.not_allowed or stat == check.forbidden:
                     return True
                 else:
@@ -196,6 +195,7 @@ class App(ctk.CTk):
                              show="headings",
                              height=4,
                              style="Custom.Treeview")
+
         table.column("short-url", width=200)
         table.column("og-url", width=850)
         table.heading("short-url", text="Shortened URL")
