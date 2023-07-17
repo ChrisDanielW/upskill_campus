@@ -22,6 +22,7 @@ class App(ctk.CTk):
         super().__init__()
         self.title("URL Shortener")
         self.geometry("1280x720")
+        self.minsize(1100, 720)
 
         # Refreshes and displays all elements in the database on the table
         def display():
