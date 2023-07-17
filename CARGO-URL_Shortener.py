@@ -211,7 +211,7 @@ class App(ctk.CTk):
 
         # Creates a dropdown menu
         menu = tk.Menu(self, tearoff=0)
-        menu.add_command(label="Copy", command=copy_text)
+        menu.add_command(label="Copy Shortened URL", command=copy_text)
 
         # Binds the right-click event to show the dropdown menu
         def show_menu(event):
