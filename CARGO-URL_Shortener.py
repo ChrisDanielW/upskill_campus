@@ -97,7 +97,7 @@ class App(ctk.CTk):
                                  font=("Segoe UI Light", 40))
 
         self.logo.grid(sticky="e",
-                       padx=15)
+                       padx=15, pady=(15,0))
 
         # Label that acts as a simple border
         self.label0 = ctk.CTkLabel(self,
@@ -212,7 +212,7 @@ class App(ctk.CTk):
         # Creates a dropdown menu
         menu = tk.Menu(self, tearoff=0)
         menu.add_command(label="Copy Shortened URL", command=copy_text)
-        menu.add_command(label="Delete History", command=clear_tab)
+        menu.add_command(label="Clear History", command=clear_tab)
 
         # Binds the right-click event to show the dropdown menu
         def show_menu(event):
@@ -270,7 +270,7 @@ class App(ctk.CTk):
                                    font=("Arial", 15, "italic"))
 
         self.madeby.grid(sticky="ws",
-                         padx=15, pady=(10, 0))
+                         padx=15)
 
         display()
 
