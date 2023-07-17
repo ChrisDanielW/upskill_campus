@@ -87,7 +87,7 @@ class App(ctk.CTk):
                 border += '_'
             return border
 
-        # Adds weight to a column in custoktkinter's grid system to give it more preference
+        # Adds weight to a column in customtkinter's grid system to give it more preference
         self.grid_columnconfigure(0, weight=1)
 
         # The logo consisting of the title
