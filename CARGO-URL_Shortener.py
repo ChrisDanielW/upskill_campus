@@ -272,11 +272,14 @@ class App(ctk.CTk):
         self.madeby.grid(sticky="ws",
                          padx=15)
 
+        # Filling the table
         display()
 
 
+# Running the GUI in a loop
 app = App()
 app.mainloop()
 
+# Closing the cursor and the connection
 cur.close()
 conn.close()
