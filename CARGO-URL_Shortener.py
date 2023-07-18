@@ -26,7 +26,7 @@ class App(ctk.CTk):
 
         # Refreshes and displays all elements in the database on the table
         def display():
-            cur.execute("SELECT short_url, og_url FROM urls ORDER BY id DESC")
+            cur.execute("SELECT short_url, og_url FROM urls ORDER BY id DESC")  # Displays recent URLs first
             rows = cur.fetchall()
             conn.commit()
             table.delete(*table.get_children())
@@ -39,7 +39,6 @@ class App(ctk.CTk):
                 resp = requests.head(link)
                 stat = resp.status_code
                 check = requests.codes
-                print(stat)
                 if stat == check.ok or stat == check.found or stat == check.not_allowed or stat == check.forbidden:
                     try:
                         Sh().tinyurl.short(link)
@@ -96,7 +95,7 @@ class App(ctk.CTk):
         # Adds weight to a column in customtkinter's grid system to give it more preference
         self.grid_columnconfigure(0, weight=1)
 
-        # The logo consisting of the title
+        # The label consisting of the title
         self.logo = ctk.CTkLabel(self,
                                  text="CARGO",
                                  font=("Segoe UI Light", 40))
