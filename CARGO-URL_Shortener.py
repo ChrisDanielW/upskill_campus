@@ -39,8 +39,13 @@ class App(ctk.CTk):
                 resp = requests.head(link)
                 stat = resp.status_code
                 check = requests.codes
+                print(stat)
                 if stat == check.ok or stat == check.found or stat == check.not_allowed or stat == check.forbidden:
-                    return True
+                    try:
+                        Sh().tinyurl.short(link)
+                        return True
+                    except requests.exceptions.ReadTimeout:
+                        return False
                 else:
                     return False
             except requests.exceptions.RequestException:
@@ -97,7 +102,7 @@ class App(ctk.CTk):
                                  font=("Segoe UI Light", 40))
 
         self.logo.grid(sticky="e",
-                       padx=15, pady=(15,0))
+                       padx=15, pady=(15, 0))
 
         # Label that acts as a simple border
         self.label0 = ctk.CTkLabel(self,
