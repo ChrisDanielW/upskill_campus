@@ -26,7 +26,7 @@ class App(ctk.CTk):
 
         # Refreshes and displays all elements in the database on the table
         def display():
-            cur.execute("SELECT short_url, og_url FROM urls")
+            cur.execute("SELECT short_url, og_url FROM urls ORDER BY id DESC")
             rows = cur.fetchall()
             conn.commit()
             table.delete(*table.get_children())
