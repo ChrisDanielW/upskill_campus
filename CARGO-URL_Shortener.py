@@ -1,3 +1,5 @@
+# GitHub Link for this code: https://github.com/ChrisDanielW/UpSkill-URL_Shortener-CARGO/blob/master/CARGO-URL_Shortener.py
+
 import customtkinter as ctk
 import requests
 import tkinter as tk
