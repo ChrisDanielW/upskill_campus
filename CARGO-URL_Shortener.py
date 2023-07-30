@@ -1,5 +1,18 @@
 # GitHub Link for this code: https://github.com/ChrisDanielW/UpSkill-URL_Shortener-CARGO/blob/master/CARGO-URL_Shortener.py
 
+'''
+
+This project requires the CustomTkinter, PyShorteners, and Requests packages to be installed to work properly. 
+They can be installed by inputting the following commands in your terminal (respectively):
+
+- pip3 install customtkinter
+- pip install pyshorteners
+- pip install requests
+
+All the other packages that have been imported below are available by default in Python's library.
+
+'''
+
 import customtkinter as ctk
 import requests
 import tkinter as tk
